@@ -4,13 +4,51 @@
 import json, html, re, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-KM  = os.path.join(HERE, "keymap.json")
 OUT = os.path.join(HERE, "aad-keymap-layout.svg")
 
-raw = open(KM).read()
-raw = "\n".join(l for l in raw.splitlines() if not l.lstrip().startswith("//"))
-data = json.loads(raw)
-layers = data["layers"]
+def load_layers():
+    """Read layers from keymap.json if present, else parse keymap.c."""
+    jp = os.path.join(HERE, "keymap.json")
+    cp = os.path.join(HERE, "keymap.c")
+    if os.path.exists(jp):
+        raw = open(jp).read()
+        raw = "\n".join(l for l in raw.splitlines()
+                        if not l.lstrip().startswith("//"))
+        return json.loads(raw)["layers"]
+    src = open(cp).read()
+    src = re.sub(r"/\*.*?\*/", "", src, flags=re.S)
+    src = "\n".join(line.split("//")[0] for line in src.splitlines())
+    macro = "LAYOUT_corne_hlc("
+    layers, i = [], 0
+    while True:
+        j = src.find(macro, i)
+        if j < 0:
+            break
+        k = j + len(macro)
+        depth, buf = 1, []
+        while depth > 0:
+            c = src[k]
+            depth += (c == "(") - (c == ")")
+            if depth > 0:
+                buf.append(c)
+            k += 1
+        i = k
+        toks, d, cur = [], 0, ""
+        for c in "".join(buf):
+            if c == "(":
+                d += 1; cur += c
+            elif c == ")":
+                d -= 1; cur += c
+            elif c == "," and d == 0:
+                toks.append(cur.strip()); cur = ""
+            else:
+                cur += c
+        if cur.strip():
+            toks.append(cur.strip())
+        layers.append(toks)
+    return layers
+
+layers = load_layers()
 
 # Physical layout for LAYOUT_corne_hlc, in the SAME order the keymap.json arrays use.
 # (x in key-units, y in key-units, width). Module row (last 10) omitted from the
