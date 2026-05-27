@@ -22,9 +22,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     // Layer 1 — Function / Navigation (hold left-inner thumb = Tab)
+    // Also: trackpad acts as a scroll wheel while this layer is active
+    // (see pointing_device_task_user below).
     [1] = LAYOUT_corne_hlc(
-        _______, KC_F1,  KC_F2,                KC_F3,   KC_F4,                 KC_F5,        KC_F6,   KC_F7,                   KC_F8,   KC_F9,                  KC_F10,  _______,
-        _______, KC_DEL, MT(MOD_LALT,KC_WBAK), KC_HOME, MT(MOD_LCTL,KC_LEFT),  KC_F11,       KC_F12,  MT(MOD_RCTL,KC_RIGHT),   KC_END,  MT(MOD_LALT,KC_WFWD),   KC_BSPC, _______,
+        KC_F1,   KC_F2,  KC_F3,                KC_F4,   KC_F5,                 KC_F6,        KC_F7,   KC_F8,                   KC_F9,   KC_F10,                 KC_F11,  KC_F12,
+        _______, KC_DEL, MT(MOD_LALT,KC_WBAK), KC_HOME, MT(MOD_LCTL,KC_LEFT),  XXXXXXX,      XXXXXXX, MT(MOD_RCTL,KC_RIGHT),   KC_END,  MT(MOD_LALT,KC_WFWD),   KC_BSPC, _______,
         _______, KC_TAB, KC_BTN1,              KC_BTN2, KC_UP,                 KC_PGUP,      KC_PGDN, KC_DOWN,                 XXXXXXX, XXXXXXX,                KC_ESC,  _______,
                                           _______, XXXXXXX, _______,     _______, MO(3), _______,
                   _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______
@@ -69,6 +71,28 @@ combo_t key_combos[] = {
     COMBO(boot_left_combo,  QK_BOOT),
     COMBO(boot_right_combo, QK_BOOT),
 };
+
+// Layer 1 → trackpad becomes a scroll wheel (horizontal + vertical).
+// Accumulators keep slow drags from truncating to zero ticks. Raise the
+// divisor to slow scroll, lower to speed it up. Sign on the V accumulator
+// is set so finger-up = content-up (natural scroll); flip the sign on
+// v_acc if you prefer traditional scroll-wheel direction.
+#define SCROLL_DIVISOR 8
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    if (IS_LAYER_ON(1)) {
+        static int16_t h_acc = 0, v_acc = 0;
+        h_acc += mouse_report.x;
+        v_acc -= mouse_report.y;
+        mouse_report.h = h_acc / SCROLL_DIVISOR;
+        mouse_report.v = v_acc / SCROLL_DIVISOR;
+        h_acc -= mouse_report.h * SCROLL_DIVISOR;
+        v_acc -= mouse_report.v * SCROLL_DIVISOR;
+        mouse_report.x = 0;
+        mouse_report.y = 0;
+    }
+    return mouse_report;
+}
 
 // Snappy layers, precise home-row mods:
 //  - Layer-tap thumb keys switch to the layer the instant another key is
