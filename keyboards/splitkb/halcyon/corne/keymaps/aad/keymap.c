@@ -3,8 +3,12 @@
 // aad — Halcyon Corne rev2.
 // C port of the former keymap.json (functionally identical), so it can carry
 // config.h tap-hold tuning. Ported from a 34-key Ferris/Sweep layout.
-// Tap dances intentionally omitted. Module row + (absent) encoders are plain
-// keys here since this builds with HLC_NONE (no module).
+// Tap dances intentionally omitted.
+//
+// Two firmwares are built from this source (see qmk.json):
+//   *_left_tft     → HLC_TFT_DISPLAY=1   (flash to LEFT half)
+//   *_right_cirque → HLC_CIRQUE_TRACKPAD=1 (flash to RIGHT half)
+// Module-row keys are plain key slots (no encoders on this build).
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -21,7 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [1] = LAYOUT_corne_hlc(
         _______, KC_F1,  KC_F2,                KC_F3,   KC_F4,                 KC_F5,        KC_F6,   KC_F7,                   KC_F8,   KC_F9,                  KC_F10,  _______,
         _______, KC_DEL, MT(MOD_LALT,KC_WBAK), KC_HOME, MT(MOD_LCTL,KC_LEFT),  KC_F11,       KC_F12,  MT(MOD_RCTL,KC_RIGHT),   KC_END,  MT(MOD_LALT,KC_WFWD),   KC_BSPC, _______,
-        _______, KC_TAB, XXXXXXX,              XXXXXXX, KC_UP,                 KC_PGUP,      KC_PGDN, KC_DOWN,                 XXXXXXX, XXXXXXX,                KC_ESC,  _______,
+        _______, KC_TAB, KC_BTN1,              KC_BTN2, KC_UP,                 KC_PGUP,      KC_PGDN, KC_DOWN,                 XXXXXXX, XXXXXXX,                KC_ESC,  _______,
                                           _______, XXXXXXX, _______,     _______, MO(3), _______,
                   _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______
     ),

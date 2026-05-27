@@ -5,8 +5,16 @@
             "splitkb/halcyon/corne/rev2",
             "aad",
             {
-                "HLC_NONE": "1",
-                "TARGET": "splitkb_halcyon_corne_rev2_aad"
+                "HLC_TFT_DISPLAY": "1",
+                "TARGET": "splitkb_halcyon_corne_rev2_aad_left_tft"
+            }
+        ],
+        [
+            "splitkb/halcyon/corne/rev2",
+            "aad",
+            {
+                "HLC_CIRQUE_TRACKPAD": "1",
+                "TARGET": "splitkb_halcyon_corne_rev2_aad_right_cirque"
             }
         ]
     ]

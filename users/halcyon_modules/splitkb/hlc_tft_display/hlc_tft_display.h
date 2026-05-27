@@ -5,6 +5,7 @@
 
 #include "qp.h"
 #include "qp_surface.h"
+#include "color.h"  // HSV_BLACK; no longer pulled in transitively by current vial-qmk
 
 // All values (including hue) are scaled to 0-255
 #define HSV_SPLITKB 145, 235, 155
