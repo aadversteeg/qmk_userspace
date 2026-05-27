@@ -157,10 +157,10 @@
 <text x="53.0" y="220.3" font-size="15" text-anchor="middle" fill="#1c1c1c">▽</text>
 <rect x="84.0" y="188.3" width="54.0" height="54" rx="7" fill="#ffffff" stroke="#9aa4b0"/>
 <text x="111.0" y="220.3" font-size="15" text-anchor="middle" fill="#1c1c1c">Tab</text>
-<rect x="142.0" y="173.8" width="54.0" height="54" rx="7" fill="#f0f0f0" stroke="#dddddd" stroke-dasharray="3,3"/>
-<text x="169.0" y="205.8" font-size="15" text-anchor="middle" fill="#1c1c1c"></text>
-<rect x="200.0" y="168.0" width="54.0" height="54" rx="7" fill="#f0f0f0" stroke="#dddddd" stroke-dasharray="3,3"/>
-<text x="227.0" y="200.0" font-size="15" text-anchor="middle" fill="#1c1c1c"></text>
+<rect x="142.0" y="173.8" width="54.0" height="54" rx="7" fill="#ffffff" stroke="#9aa4b0"/>
+<text x="169.0" y="205.8" font-size="15" text-anchor="middle" fill="#1c1c1c">BTN1</text>
+<rect x="200.0" y="168.0" width="54.0" height="54" rx="7" fill="#ffffff" stroke="#9aa4b0"/>
+<text x="227.0" y="200.0" font-size="15" text-anchor="middle" fill="#1c1c1c">BTN2</text>
 <rect x="258.0" y="173.8" width="54.0" height="54" rx="7" fill="#ffffff" stroke="#9aa4b0"/>
 <text x="285.0" y="205.8" font-size="15" text-anchor="middle" fill="#1c1c1c">↑</text>
 <rect x="316.0" y="180.8" width="54.0" height="54" rx="7" fill="#ffffff" stroke="#9aa4b0"/>

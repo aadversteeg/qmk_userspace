@@ -58,6 +58,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+// Bootloader combos. Each lives entirely on one half so it still works when
+// only that half is plugged into USB (the other half / TRRS absent during
+// flashing). Three top-row keys held within COMBO_TERM (~50ms) — no English
+// word produces this roll, so they don't misfire during typing.
+const uint16_t PROGMEM boot_left_combo[]  = {KC_Q, KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM boot_right_combo[] = {KC_U, KC_I, KC_O, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(boot_left_combo,  QK_BOOT),
+    COMBO(boot_right_combo, QK_BOOT),
+};
+
 // Snappy layers, precise home-row mods:
 //  - Layer-tap thumb keys switch to the layer the instant another key is
 //    pressed (no waiting on TAPPING_TERM).
