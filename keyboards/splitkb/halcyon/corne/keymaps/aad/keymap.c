@@ -74,16 +74,16 @@ combo_t key_combos[] = {
 
 // Layer 1 → trackpad becomes a scroll wheel (horizontal + vertical).
 // Accumulators keep slow drags from truncating to zero ticks. Raise the
-// divisor to slow scroll, lower to speed it up. Sign on the V accumulator
-// is set so finger-up = content-up (natural scroll); flip the sign on
-// v_acc if you prefer traditional scroll-wheel direction.
+// divisor to slow scroll, lower to speed it up. Traditional scroll-wheel
+// direction: finger-up = content-down (page scrolls down). Flip the sign
+// on v_acc back to `-=` if you want natural-scroll behavior.
 #define SCROLL_DIVISOR 8
 
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if (IS_LAYER_ON(1)) {
         static int16_t h_acc = 0, v_acc = 0;
         h_acc += mouse_report.x;
-        v_acc -= mouse_report.y;
+        v_acc += mouse_report.y;
         mouse_report.h = h_acc / SCROLL_DIVISOR;
         mouse_report.v = v_acc / SCROLL_DIVISOR;
         h_acc -= mouse_report.h * SCROLL_DIVISOR;
